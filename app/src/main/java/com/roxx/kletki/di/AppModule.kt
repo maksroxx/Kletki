@@ -1,6 +1,10 @@
 package com.roxx.kletki.di
 
-import com.roxx.kletki.data.CellRepositoryImpl
+import android.app.Application
+import androidx.room.Room
+import com.roxx.kletki.data.local.CellDao
+import com.roxx.kletki.data.local.CellDatabase
+import com.roxx.kletki.data.repository.CellRepositoryImpl
 import com.roxx.kletki.domain.repository.CellRepository
 import com.roxx.kletki.domain.use_cases.AddNewCellUseCase
 import com.roxx.kletki.domain.use_cases.GetCellUiModelsUseCase
@@ -17,8 +21,18 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCellRepository(): CellRepository {
-        return CellRepositoryImpl()
+    fun provideCellDatabase(app: Application): CellDatabase {
+        return Room.databaseBuilder(
+            app,
+            CellDatabase::class.java,
+            "cell_db"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCellRepository(database: CellDatabase): CellRepository {
+        return CellRepositoryImpl(dao = database.dao)
     }
 
     @Provides

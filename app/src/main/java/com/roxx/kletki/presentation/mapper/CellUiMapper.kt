@@ -2,6 +2,7 @@ package com.roxx.kletki.presentation.mapper
 
 import com.roxx.kletki.R
 import com.roxx.kletki.domain.model.Cell
+import com.roxx.kletki.domain.model.CellType
 import com.roxx.kletki.presentation.model.CellUiModel
 import com.roxx.kletki.ui.theme.AliveFirst
 import com.roxx.kletki.ui.theme.AliveSecond
@@ -11,9 +12,9 @@ import com.roxx.kletki.ui.theme.LifeFirst
 import com.roxx.kletki.ui.theme.LifeSecond
 
 fun Cell.toUiModel(): CellUiModel {
-    return when (this) {
-        is Cell.AliveCell -> CellUiModel(
-            type = Cell.AliveCell,
+    return when (this.type) {
+        is CellType.AliveCellType -> CellUiModel(
+            type = CellType.AliveCellType,
             firstColor = AliveFirst,
             secondColor = AliveSecond,
             imageRes = R.drawable.fireworks,
@@ -21,8 +22,8 @@ fun Cell.toUiModel(): CellUiModel {
             description = "и шевелится!"
         )
 
-        is Cell.DeadCell -> CellUiModel(
-            type = Cell.DeadCell,
+        is CellType.DeadCellType -> CellUiModel(
+            type = CellType.DeadCellType,
             firstColor = DeadFirst,
             secondColor = DeadSecond,
             imageRes = R.drawable.skeleton,
@@ -30,8 +31,8 @@ fun Cell.toUiModel(): CellUiModel {
             description = "или прикидывается"
         )
 
-        is Cell.LifeCell -> CellUiModel(
-            type = Cell.LifeCell,
+        is CellType.LifeCellType -> CellUiModel(
+            type = CellType.LifeCellType,
             firstColor = LifeFirst,
             secondColor = LifeSecond,
             imageRes = R.drawable.bird,

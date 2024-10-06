@@ -1,7 +1,6 @@
 package com.roxx.kletki.domain.model
 
-sealed class Cell {
-    object AliveCell: Cell()
-    object DeadCell: Cell()
-    object LifeCell: Cell()
-}
+data class Cell(
+    val id: Int? = null,
+    val type: CellType
+)

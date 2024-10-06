@@ -1,26 +1,30 @@
 package com.roxx.kletki.domain.use_cases
 
 import com.roxx.kletki.domain.model.Cell
+import com.roxx.kletki.domain.model.CellType
 import com.roxx.kletki.domain.repository.CellRepository
 
 class AddNewCellUseCase(private val repository: CellRepository) {
 
-    operator fun invoke() {
-        val newCell: Cell = when ((0..1).random()) {
-            0 -> Cell.AliveCell
-            1 -> Cell.DeadCell
-            else -> Cell.AliveCell
+    suspend operator fun invoke() {
+        val newCellType: CellType = when ((0..1).random()) {
+            0 -> CellType.AliveCellType
+            1 -> CellType.DeadCellType
+            else -> CellType.AliveCellType
         }
 
-        repository.addCell(newCell)
+        repository.addCell(Cell(type = newCellType))
 
-        val lastThreeCells = repository.getLastThreeCells()
+        val lastThreeCells = repository.getLastCells(3)
+        val lastFourCells = repository.getLastCells(4)
 
         if (lastThreeCells.size == 3) {
-            if (lastThreeCells.all { it is Cell.AliveCell }) {
-                repository.addCell(Cell.LifeCell)
-            } else if (lastThreeCells.all { it is Cell.DeadCell }) {
-                repository.removeLastOfType(Cell.LifeCell)
+            if (lastThreeCells.all { it.type is CellType.AliveCellType }) {
+                repository.addCell(Cell(type = CellType.LifeCellType))
+            } else if (
+                lastThreeCells.all { it.type is CellType.DeadCellType }
+                && lastFourCells.first().type is CellType.LifeCellType) {
+                repository.removeLastOfType()
             }
         }
     }

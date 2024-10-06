@@ -2,10 +2,10 @@ package com.roxx.kletki.presentation.model
 
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
-import com.roxx.kletki.domain.model.Cell
+import com.roxx.kletki.domain.model.CellType
 
 data class CellUiModel(
-    val type: Cell,
+    val type: CellType,
     val firstColor: Color,
     val secondColor: Color,
     @DrawableRes

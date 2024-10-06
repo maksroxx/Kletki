@@ -1,12 +1,14 @@
 package com.roxx.kletki.presentation.screen
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.roxx.kletki.domain.use_cases.AddNewCellUseCase
 import com.roxx.kletki.domain.use_cases.GetCellUiModelsUseCase
 import com.roxx.kletki.presentation.model.CellUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,11 +25,15 @@ class CellsScreenViewModel @Inject constructor(
     }
 
     private fun loadCells() {
-        _cells.value = getCellUiModelsUseCase()
+        viewModelScope.launch {
+            _cells.value = getCellUiModelsUseCase()
+        }
     }
 
     fun addNewCell() {
-        addNewCellUseCase()
-        loadCells()
+        viewModelScope.launch {
+            addNewCellUseCase()
+            loadCells()
+        }
     }
 }

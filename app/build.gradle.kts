@@ -52,6 +52,11 @@ android {
 }
 
 dependencies {
+    //room
+    implementation (libs.androidx.room.runtime)
+    ksp (libs.androidx.room.compiler)
+    implementation (libs.androidx.room.ktx)
+
     // hilt
     implementation (libs.hilt.android)
     ksp (libs.hilt.compiler)

@@ -5,7 +5,7 @@ import com.roxx.kletki.presentation.model.CellUiModel
 
 class GetCellUiModelsUseCase(private val getCellsUseCase: GetCellsUseCase) {
 
-    operator fun invoke(): List<CellUiModel> {
+    suspend operator fun invoke(): List<CellUiModel> {
         val domainCells = getCellsUseCase()
         return domainCells.map { it.toUiModel() }
     }
