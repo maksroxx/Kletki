@@ -38,9 +38,17 @@ fun CellsScreen(
 
     val listState = rememberLazyListState()
 
+    LaunchedEffect(true) {
+        if (cells.value.isNotEmpty()) {
+            delay(100L)
+            listState.animateScrollToItem(cells.value.size - 1)
+        }
+    }
     LaunchedEffect(cells.value.size) {
         if (cells.value.isNotEmpty()) {
-            delay(200L)
+            delay(
+                200L
+            )
             listState.animateScrollToItem(cells.value.size - 1)
         }
     }
